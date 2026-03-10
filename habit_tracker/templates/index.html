@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFlow — Home</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Modern Landing Page Styles */
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.85) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            object-fit: cover;
+            opacity: 0.35;
+            filter: blur(3px) brightness(0.9);
+            transform: scale(1.05);
+            /* hide blur edge artifacts */
+            pointer-events: none;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            border-bottom: 1px solid var(--glass-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-brand i {
+            -webkit-text-fill-color: initial;
+            color: #6366f1;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.95rem;
+            display: inline-block;
+        }
+
+        .btn-login {
+            color: var(--text-main);
+            background: transparent;
+            border: 1px solid var(--glass-border);
+        }
+
+        .btn-login:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-register {
+            background: var(--primary);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 20px 0 rgba(79, 70, 229, 0.5);
+        }
+
+        .btn-register:hover {
+            background: var(--primary-hover);
+            transform: scale(1.04) translateY(-2px);
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.65);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 6rem 1rem 4rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .label-new {
+            background: rgba(168, 85, 247, 0.2);
+            color: #d8b4fe;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            animation: fadeInDown 0.8s ease-out;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.75rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(to right, #818cf8, #d8b4fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 3rem;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+            max-width: 600px;
+            line-height: 1.7;
+        }
+
+        /* Uses/Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 4rem 5%;
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+        }
+
+        .feature-card {
+            background: rgba(30, 41, 59, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 1rem;
+            padding: 2.5rem 2rem;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+            text-align: left;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
+            border-color: rgba(129, 140, 248, 0.6);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(99, 102, 241, 0.15);
+            color: #818cf8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+        }
+
+        .feature-desc {
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero {
+                padding: 4rem 1rem;
+            }
+
+            .nav-buttons .btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <video autoplay muted loop playsinline class="hero-bg">
+        <source src="{{ url_for('static', filename='home_bg_video.mp4') }}" type="video/mp4">
+    </video>
+
+    <!-- Top Navigation -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <i class="fa-solid fa-layer-group"></i>
+            HabitFlow
+        </div>
+        <div class="nav-buttons">
+            <a href="{{ url_for('auth.login') }}" class="btn btn-login">Login</a>
+            <a href="{{ url_for('auth.register') }}" class="btn btn-register">Register</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <section class="hero">
+            <div class="label-new">The Ultimate Tracker</div>
+            <h1>Transform Your Daily Routine with <span class="highlight">HabitFlow</span></h1>
+            <p>Build lasting habits, break bad ones, and achieve your goals with our beautiful, data-driven tracker. The
+                complete toolkit for a productive life.</p>
+            <div class="nav-buttons" style="margin-top: 1rem;">
+                <a href="{{ url_for('auth.register') }}" class="btn btn-register"
+                    style="font-size: 1.1rem; padding: 0.8rem 2.5rem;">Start Free Journey</a>
+            </div>
+        </section>
+
+        <!-- Uses / Features Section -->
+        <section class="features">
+            <!-- Feature 1 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">Track Your Consistency</h3>
+                <p class="feature-desc">Monitor your daily progress through intuitive heatmaps and streak counters.
+                    Build momentum and watch your habits grow effortlessly over time.</p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-bullseye"></i>
+                </div>
+                <h3 class="feature-title">Achieve Your Goals</h3>
+                <p class="feature-desc">Set clear, actionable goals with specific deadlines and tracking loops.
+                    Integrated smart reminders keep you focused on what truly matters.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <h3 class="feature-title">Unlock Insights</h3>
+                <p class="feature-desc">Gain intelligent feedback on your behavior patterns. Understand your most
+                    productive periods and identify risks before streaks break.</p>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>

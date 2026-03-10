@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements - Habit Tracker</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Check saved theme immediately
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+    <style>
+        /* Flash Message Styles (Copied from dashboard) */
+        .flash-messages {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .flash-message {
+            padding: 15px 25px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            color: white;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .flash-message.success {
+            background-color: #4CAF50;
+        }
+
+        .flash-message.error {
+            background-color: #f44336;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle Theme"
+        style="position: absolute; top: 20px; right: 20px;">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun" style="display: none;">☀️</span>
+    </button>
+
+    <div class="dashboard-container" style="padding-top: 2rem;">
+        <header class="achievements-header"
+            style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem;">
+            <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                <a href="{{ url_for('dashboard.home') }}" class="back-link"
+                    style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--text-muted); font-weight: 500; transition: color 0.3s ease;">
+                    <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg> Back to Dashboard
+                </a>
+                <h1 class="stats-title" style="font-size: 2rem; margin-top: 0.5rem;">🏆 Achievements Gallery</h1>
+                <p style="color: #6b7280;">Track your milestones and badges.</p>
+            </div>
+            <div class="xp-display">
+                <span style="font-size: 1.5rem; font-weight: 700; color: #4f46e5;">{{ user.xp }} XP</span>
+                <span style="font-size: 0.9rem; color: #6b7280; display: block;">Total Experience</span>
+            </div>
+        </header>
+
+        <div class="achievements-grid">
+            {% for item in achievements %}
+            <div
+                class="achievement-card {{ 'locked' if not item.unlocked else 'unlocked' }} tier-{{ 'gold' if item.achievement.xp_reward >= 300 else 'silver' if item.achievement.xp_reward >= 100 else 'bronze' }}">
+                <div class="ach-icon">
+                    {{ item.achievement.icon }}
+                </div>
+                <div class="ach-info">
+                    <h3 class="ach-name">{{ item.achievement.name }}</h3>
+                    <p class="ach-desc">{{ item.achievement.description }}</p>
+                    <div class="ach-meta">
+                        <span class="ach-xp">+{{ item.achievement.xp_reward }} XP</span>
+                        {% if item.unlocked %}
+                        <span class="ach-date">Earned {{ item.earned_date.strftime('%b %d, %Y') if item.earned_date else
+                            'Unknown' }}</span>
+                        {% else %}
+                        <span class="ach-date">Locked</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <style>
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .achievement-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            border: 1px solid #e5e7eb;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-card.locked {
+            background: #f3f4f6;
+            opacity: 0.7;
+            filter: grayscale(1);
+        }
+
+        .achievement-card.unlocked:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tiers */
+        .tier-bronze {
+            border-bottom: 4px solid #cd7f32;
+        }
+
+        .tier-silver {
+            border-bottom: 4px solid #c0c0c0;
+        }
+
+        .tier-gold {
+            border-bottom: 4px solid #ffd700;
+        }
+
+        .ach-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: #f9fafb;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .achievement-card.unlocked .ach-icon {
+            background: #e0e7ff;
+            animation: pulse 2s infinite;
+        }
+
+        .ach-name {
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .ach-desc {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .ach-meta {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            font-size: 0.75rem;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 0.75rem;
+        }
+
+        .ach-xp {
+            font-weight: 600;
+            color: #4f46e5;
+        }
+
+        .ach-date {
+            color: #9ca3af;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.2);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+            }
+        }
+    </style>
+
+    <script>
+        // --- Theme Toggle Logic ---
+        const themeToggle = document.getElementById('themeToggle');
+        const iconMoon = document.querySelector('.icon-moon');
+        const iconSun = document.querySelector('.icon-sun');
+        const html = document.documentElement;
+
+        // Check saved theme for Icon State
+        if (localStorage.getItem('theme') === 'dark') {
+            iconMoon.style.display = 'none';
+            iconSun.style.display = 'inline';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                iconMoon.style.display = 'inline';
+                iconSun.style.display = 'none';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'inline';
+            }
+        });
+    </script>
+</body>
+
+</html>

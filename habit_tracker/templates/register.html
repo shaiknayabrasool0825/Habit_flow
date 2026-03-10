@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Habit Tracker</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        // Check saved theme immediately
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+</head>
+
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="{{ url_for('static', filename='animate.mp4') }}" type="video/mp4">
+    </video>
+
+    <!-- Theme Toggle (Fixed Top Right) -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle Theme"
+        style="position: fixed; top: 20px; right: 20px; z-index: 100; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px);">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun" style="display: none;">☀️</span>
+    </button>
+
+    <div class="auth-overlay"></div>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-header">
+                <div class="auth-logo">
+                    <i class="fa-solid fa-user-plus"></i>
+                </div>
+                <h1 class="auth-title">Create Account</h1>
+                <p class="auth-subtitle">Start your journey to better habits today</p>
+            </div>
+
+            <!-- Flash Messages -->
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="auth-flash {{ category }}">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <form action="{{ url_for('auth.register') }}" method="POST" class="auth-form">
+                <div class="form-group">
+                    <input type="text" name="username" class="auth-input" placeholder="Username" required
+                        autocomplete="off">
+                    <i class="fa-regular fa-user input-icon-left"></i>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" name="email" id="emailInput" class="auth-input" placeholder="Email Address"
+                        required autocomplete="off">
+                    <i class="fa-regular fa-envelope input-icon-left"></i>
+                    <span id="emailError"
+                        style="color: #f87171; font-size: 0.8rem; position: absolute; bottom: -1.2rem; left: 0.5rem; display: none;">Invalid
+                        email format</span>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="password" id="passwordInput" class="auth-input" placeholder="Password"
+                        required>
+                    <i class="fa-solid fa-lock input-icon-left"></i>
+                </div>
+
+                <!-- Password Requirements -->
+                <div id="passwordRequirements"
+                    style="text-align: left; font-size: 0.8rem; margin-bottom: 1.5rem; display: none; color: var(--text-muted);">
+                    <div class="req-item" id="req-length" style="margin-bottom: 0.25rem;"><i
+                            class="fa-solid fa-circle-xmark"></i> At least 8 characters</div>
+                    <div class="req-item" id="req-upper" style="margin-bottom: 0.25rem;"><i
+                            class="fa-solid fa-circle-xmark"></i> At least one uppercase letter</div>
+                    <div class="req-item" id="req-number" style="margin-bottom: 0.25rem;"><i
+                            class="fa-solid fa-circle-xmark"></i> At least one number</div>
+                    <div class="req-item" id="req-special"><i class="fa-solid fa-circle-xmark"></i> At least one special
+                        char</div>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full" style="margin-top: 1rem;">Sign Up</button>
+            </form>
+
+            <div class="auth-divider">
+                <span>Or sign up with</span>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn btn-google" title="Google">
+                    <i class="fa-brands fa-google"></i>
+                </button>
+                <button class="social-btn btn-github" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </button>
+                <button class="social-btn btn-apple" title="Apple">
+                    <i class="fa-brands fa-apple"></i>
+                </button>
+            </div>
+
+            <p class="signup-link">
+                Already have an account? <a href="{{ url_for('auth.login') }}" class="forgot-link">Sign in</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const emailInput = document.getElementById('emailInput');
+        const emailError = document.getElementById('emailError');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        emailInput.addEventListener('input', function () {
+            if (this.value && !emailRegex.test(this.value)) {
+                emailError.style.display = 'block';
+                this.style.borderColor = '#f87171'; // Red 400
+            } else {
+                emailError.style.display = 'none';
+                this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        const passwordInput = document.getElementById('passwordInput');
+        const requirements = document.getElementById('passwordRequirements');
+        const reqItems = {
+            length: { elem: document.getElementById('req-length'), regex: /.{8,}/ },
+            upper: { elem: document.getElementById('req-upper'), regex: /[A-Z]/ },
+            number: { elem: document.getElementById('req-number'), regex: /\d/ },
+            special: { elem: document.getElementById('req-special'), regex: /[!@#$%^&*(),.?":{}|<>]/ }
+        };
+
+        passwordInput.addEventListener('focus', () => requirements.style.display = 'block');
+        passwordInput.addEventListener('blur', () => {
+            if (!passwordInput.value) requirements.style.display = 'none';
+        });
+
+        passwordInput.addEventListener('input', function () {
+            const val = this.value;
+            for (const key in reqItems) {
+                const item = reqItems[key];
+                if (item.regex.test(val)) {
+                    item.elem.style.color = '#4ade80'; // Green 400
+                    item.elem.querySelector('i').className = 'fa-solid fa-circle-check';
+                } else {
+                    item.elem.style.color = '#f87171'; // Red 400
+                    item.elem.querySelector('i').className = 'fa-solid fa-circle-xmark';
+                }
+            }
+        });
+    </script>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const iconMoon = document.querySelector('.icon-moon');
+        const iconSun = document.querySelector('.icon-sun');
+        const html = document.documentElement;
+
+        // Sync icon on load
+        if (html.getAttribute('data-theme') === 'dark') {
+            iconMoon.style.display = 'none';
+            iconSun.style.display = 'inline';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                iconMoon.style.display = 'inline';
+                iconSun.style.display = 'none';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'inline';
+            }
+        });
+    </script>
+</body>
+
+</html>

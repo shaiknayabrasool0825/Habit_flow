@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - HabitFlow</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="dashboard-body">
+
+    <!-- Top Navigation -->
+    <nav class="nav-bar">
+        <div class="nav-brand">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span>HabitFlow Admin</span>
+        </div>
+
+        <div class="nav-user">
+            <a href="{{ url_for('dashboard.dashboard') }}" class="btn-icon" title="Return to App">
+                <i class="fa-solid fa-house"></i>
+            </a>
+            <a href="{{ url_for('auth.logout') }}" class="btn-icon" title="Sign Out">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            </a>
+        </div>
+    </nav>
+
+    <main class="dashboard-container" style="max-width: 900px; margin: 2rem auto;">
+
+        <div class="dashboard-header">
+            <div>
+                <h2>User Management</h2>
+                <p>Add new user accounts or irreversibly wipe existing ones.</p>
+            </div>
+        </div>
+
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="flash-message {{ category }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+
+        <div class="dashboard-grid" style="grid-template-columns: 2fr 1fr;">
+
+            <!-- Existing Users List -->
+            <div class="dashboard-card action-card">
+                <h3><i class="fa-solid fa-users-rectangle"></i> Active Users ({{ users|length }})</h3>
+
+                <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                    {% for u in users %}
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-primary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                        <div>
+                            <span style="color: var(--text-primary); font-weight: bold; font-size: 1.1rem;">{{
+                                u.username }}</span>
+                            <div style="color: var(--text-secondary); font-size: 0.85rem;"><i
+                                    class="fa-solid fa-envelope"></i> {{ u.email }}</div>
+                            <div style="color: var(--accent-primary); font-size: 0.85rem; margin-top: 0.2rem;"><i
+                                    class="fa-solid fa-fire"></i> {{ u.current_streak }} Streak | {{ u.xp }} XP</div>
+                        </div>
+
+                        {% if u.id != user.id %}
+                        <!-- Delete Form -->
+                        <form action="{{ url_for('admin.delete_user', user_id=u.id) }}" method="POST"
+                            onsubmit="return confirm('WARNING: Are you sure you want to completely destroy {{ u.username }}? All habits and data will be lost.');">
+                            <button type="submit" class="btn-secondary"
+                                style="color: #ef4444; border-color: rgba(239, 68, 68, 0.3); background: rgba(239, 68, 68, 0.1); padding: 0.4rem 0.8rem; font-size: 0.9rem;">
+                                <i class="fa-solid fa-trash"></i> Wipe
+                            </button>
+                        </form>
+                        {% else %}
+                        <span
+                            style="background: rgba(16, 185, 129, 0.1); color: #10b981; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.8rem; font-weight: bold;">(You)</span>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Add User Sidebar -->
+            <div class="dashboard-card">
+                <h3><i class="fa-solid fa-user-plus"></i> Add User</h3>
+                <form action="{{ url_for('admin.add_user') }}" method="POST"
+                    style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">
+
+                    <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary);">Username</label>
+                        <input type="text" name="username" placeholder="johndoe" required
+                            style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary);">Email</label>
+                        <input type="email" name="email" placeholder="email@address.com" required
+                            style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+
+                    <div style="display: flex; flex-direction: column; gap: 0.3rem;">
+                        <label style="font-size: 0.85rem; color: var(--text-secondary);">Password</label>
+                        <input type="password" name="password" placeholder="Passw0rd123!" required
+                            style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-primary); color: var(--text-primary);">
+                    </div>
+
+                    <button type="submit" class="btn-primary" style="margin-top: 0.5rem; width: 100%;"><i
+                            class="fa-solid fa-check"></i> Create Account</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+</body>
+
+</html>

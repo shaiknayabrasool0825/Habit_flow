@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HabitFlow — Sign In</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <!-- Use the main style.css for the professional design -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        // Check saved theme immediately
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    </script>
+</head>
+
+<body>
+    <video autoplay muted loop class="video-background">
+        <source src="{{ url_for('static', filename='animate.mp4') }}" type="video/mp4">
+    </video>
+
+    <!-- Theme Toggle (Fixed Top Right) -->
+    <button class="theme-toggle" id="themeToggle" title="Toggle Theme"
+        style="position: fixed; top: 20px; right: 20px; z-index: 100; background: rgba(255,255,255,0.1); backdrop-filter: blur(4px);">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun" style="display: none;">☀️</span>
+    </button>
+
+    <div class="auth-overlay"></div>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="brand-header">
+                <div class="brand-logo-icon">
+                    <i class="fa-solid fa-layer-group" aria-label="HabitFlow Logo Icon" role="img"></i>
+                </div>
+                <h1 class="brand-name">HabitFlow</h1>
+            </div>
+            <div class="auth-header login-auth-header">
+                <h2 class="auth-title welcome-title">Welcome Back</h2>
+                <p class="auth-subtitle">Sign in to continue your growth journey</p>
+            </div>
+
+            <!-- Flash Messages -->
+            <div class="flash-messages">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                {% for category, message in messages %}
+                <div class="auth-flash {{ category }}">
+                    <i class="fa-solid fa-circle-exclamation"></i>
+                    {{ message }}
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <form action="{{ url_for('auth.login') }}" method="POST" class="auth-form">
+                <div class="form-group">
+                    <input type="email" name="email" class="auth-input" placeholder="Email Address" required
+                        autocomplete="off">
+                    <i class="fa-regular fa-envelope input-icon-left"></i>
+                </div>
+
+                <div class="form-group">
+                    <input type="password" name="password" class="auth-input" placeholder="Password" required>
+                    <i class="fa-solid fa-lock input-icon-left"></i>
+                </div>
+
+                <div class="auth-options">
+                    <label class="remember-me">
+                        <input type="checkbox" style="accent-color: var(--accent-primary);">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="{{ url_for('auth.reset_request') }}" class="forgot-link">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="btn-primary btn-full">Sign In</button>
+            </form>
+
+            <div class="auth-divider">
+                <span>Or continue with</span>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn btn-google" title="Google">
+                    <i class="fa-brands fa-google"></i>
+                </button>
+                <button class="social-btn btn-github" title="GitHub">
+                    <i class="fa-brands fa-github"></i>
+                </button>
+                <button class="social-btn btn-apple" title="Apple">
+                    <i class="fa-brands fa-apple"></i>
+                </button>
+            </div>
+
+            <p class="signup-link">
+                Don't have an account? <a href="{{ url_for('auth.register') }}" class="forgot-link">Sign up</a>
+            </p>
+        </div>
+
+        <!-- Social Proof Section -->
+        <div class="testimonials-section">
+            <h2 class="auth-title"
+                style="color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5); font-size: 1.5rem; margin-bottom: 1.5rem;">
+                Why people use HabitFlow</h2>
+            <div class="testimonials-grid">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card">
+                    <p class="quote-text">"Helped me finally keep a 14-day workout streak."</p>
+                    <div class="user-info">
+                        <div class="avatar-circle">AR</div>
+                        <span class="user-name">Ali R.</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card">
+                    <p class="quote-text">"I stopped procrastinating after using daily planning."</p>
+                    <div class="user-info">
+                        <div class="avatar-circle">SM</div>
+                        <span class="user-name">Sara M.</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card">
+                    <p class="quote-text">"Weekly review showed I study best at night."</p>
+                    <div class="user-info">
+                        <div class="avatar-circle">DK</div>
+                        <span class="user-name">Daniel K.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const iconMoon = document.querySelector('.icon-moon');
+        const iconSun = document.querySelector('.icon-sun');
+        const html = document.documentElement;
+
+        // Sync icon on load
+        if (html.getAttribute('data-theme') === 'dark') {
+            iconMoon.style.display = 'none';
+            iconSun.style.display = 'inline';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            if (html.getAttribute('data-theme') === 'dark') {
+                html.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+                iconMoon.style.display = 'inline';
+                iconSun.style.display = 'none';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                iconMoon.style.display = 'none';
+                iconSun.style.display = 'inline';
+            }
+        });
+    </script>
+</body>
+
+</html>

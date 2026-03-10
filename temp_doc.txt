@@ -1,0 +1,1568 @@
+
+  
+DESIGN AND IMPLEMENTATION OF A SECURE QR PAYMENT SYSTEM BASED 
+                                                     ON VISUAL CRYPTOGRAPHY
+A Project Report
+Submitted in the partial fulfilment of the requirements
+for the award of the degree of
+Master of Computer Applications
+In
+Department of Computer Science and Applications
+By
+KATRAGADDA LAVANYA
+ 2301600286
+Under the Supervision of
+ Mr H.Gautam 
+Assistant Professor
+
+
+
+
+
+Department of Computer Science and Applications
+KONERU LAKSHMAIAH EDUCATIONAL FOUNDATION
+Green Fields, Vaddeswaram, Guntur
+District, A.P-522302.
+(2023-2025)
+
+
+
+
+
+
+
+KONERU LAKSHMAIAH EDUCATION FOUNDATION
+DEPARTMENT OF COMPUTER SCIENCE AND APPLICATIONS
+
+
+
+
+
+DECLARATION
+The Project Report entitled “DESIGN AND IMPLEMENTATION OF A SECURE QR PAYMENT SYSTEM BASED ON VISUAL CRYPTOGRAPHY” is a record of Bonafide work by KATRAGADDA LAVANYA, submitted in partial fulfilment for the award of Master of Computer Applications in Computer Science and Applications at K L University. The results embodied in this report have not been copied from any other department/university/institute.
+
+
+                                                                                                                    Signature of the Student
+                                                KATRAGADDA LAVANYA            
+                                                                                                                           (2301600286)
+
+
+KONERU LAKSHMAIAH EDUCATION FOUNDATION
+DEPARTMENT OF COMPUTER SCIENCE AND APPLICATIONS
+
+
+
+CERTIFICATE
+This is to certify that the project report entitled “DESIGN AND IMPLEMENTATION OF A SECURE QR PAYMENT SYSTEM BASED ON VISUAL CRYPTOGRAPHY” submitted by KATRAGADDA LAVANYA in partial fulfilment of the requirements for the award of Master of Computer Applications in Computer Science and Applications at K L University, is a record of Bonafide work carried out under our guidance and supervision.
+
+
+Mr. H.Gautam                                                                                          Dr. Ch. Kiran Kumar            Assistant Professor                                                                                          Professor & HOD
+
+
+
+                                                              Signature of the Examiner
+
+
+
+
+
+
+
+
+
+
+
+                                           
+ACKNOWLEDGEMENT
+
+I am thankful to my guide, Mr. H.Gautam, Assistant Professor, Department of CSA, for his valuable guidance and encouragement. His helpful attitude and suggestions have contributed to the successful completion of this project report.
+
+I would like to express my sincere gratitude to Dr. Ch. Kiran Kumar, Head of the Department of CSA, for his kind support and encouragement throughout the course of this study and the successful completion of the project report.
+
+
+
+I also extend my heartfelt thanks to Dr. K. Subramanyam, Principal, and the Department of CSA, for their constant support and encouragement, which played a vital role in the completion of this project report.
+
+I sincerely thank the management for providing all the necessary facilities during the course of this study.
+
+Lastly, I would like to express my deep gratitude to everyone who helped, directly or indirectly, in transforming an idea into a working project.
+                                                                                                 
+
+
+                                                                                                                KATRAGADDA LAVANYA                                                                                                                            (2301600286)
+
+
+
+
+
+
+
+
+
+
+
+     
+
+
+
+
+
+
+
+
+
+DESIGN AND IMPLEMENTATION OF A SECURE QR PAYMENT SYSTEM BASED 
+                                                ON VISUAL CRYPTOGRAPHY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TABLE OF CONTENT
+
+              CONTENT                                                                     PAGE NO
+          Abstract                                                                                  1                                          
+INTRODUCTION             2-5
+Project Scope
+Proposed System
+Feasibility Study
+SRS
+System Features
+External Interface Requirements
+PROBLEM STATEMENT               6
+REQUIRMENT ANYALSIS                                      7-9
+Requirement Analysis
+Feasibility Study
+SRS
+System Requirements
+Other Requirements
+SOFTWARE DESIGN                                                         10-15
+4.1 Architecture
+4.2 Use Case Diagram
+4.3 Class Diagram
+4.4 Sequence Diagram
+4.5 Activity Diagram
+4.6 Collaboration Diagram
+4.7 Deployment Diagram
+4.8 Component Diagram
+4.9 ER Diagram
+IMPLEMENTATION    16-33
+TESTING                34-36
+Introduction
+Testing Objectives
+Levels of Testing
+ALOGRTHIMS                                37   
+CODE                              38-51
+TEST CASE                      52
+INPUT AND OUTPUT SCREEN                   53-55
+CONCLUSION                                 56
+LITERATURE REVIEW                   57-59
+REFERENCES                     60
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+TABLE OF FIGURES
+FIGURE NO        CONTENT                     PAGE NO
+                         Architecture of the Software Design                               10
+                                  Use Case Diagram1                                                11
+                                  Class Diagram                                                         11
+                                  Sequence Diagram                                                  12
+                                  Activity Diagram                                                     12
+                                  Collaboration Diagram                                            13
+                                  Deployment Diagram                                              13
+                                  Component Diagram                                               14
+                                  ER Diagram                                                             14
+                                  DFD Diagram                                                          15
+
+
+
+
+Abstract
+In this paper, we will describe the design and implementation of a secure payment system based on QR codes. These QR codes have been extensively used in recent years since they speed up the payment process and provide users with ultimate convenience. However, as convenient as they may sound, QR-based online payment systems are vulnerable to different types of attacks. Therefore, transaction processing needs to be secure enough to protect the integrity and confidentiality of every payment process. Moreover, the online payment system must provide authenticity for both the sender and receiver of each transaction. In this paper, the security of the proposed QR-based system is provided using visual cryptography. The proposed system consists of a web application that implements visual cryptography. The application provides a simple and user-friendly interface for users to share links through QR Code.
+KEYWORDS: QR codes, image cryptography
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 1
+INTRODUCTION
+
+A QR code is a two-dimensional matrix barcode that encodes and stores large amounts of data. Due to their speed and convenience, QR codes have been used extensively in many vital applications such as health, education, and finance. A number of secure QR-based online payment systems have been proposed in literature. In different payment models each providing different levels of speed and security have been presented. These models include the Operator Centric Model and the Peer-To-Peer Model.
+As digital image plays an important role in multimedia technology, it becomes more important for the users to maintain privacy. And to provide such security and privacy to the user, image encryption is very important to protect from any unauthorised user access. Image encryption has applications in various fields including internet communication, multimedia systems, medical imaging, Tele-medicine and military communication. Colour images are being transmitted and stored in large amount over the Internet and wireless networks, which take advantage of rapid development in multimedia and network technologies. The image encryption techniques are different from the data encryption techniques. And there several security problems associated with digital image processing and transmissions, so it is necessary to maintain the integrity and the confidentiality of the image. Moreover, digital images are comparatively less sensitive than data because any single change in the pixels of the does not change the entire image. In other words, a small modification of digital image is acceptable compared to data but it is more prone to attackers.
+This paper suggests a safe QR code-based online payment system. We compare public key cryptography with visual cryptography to provide the required security for the proposed system. The main disadvantages of using public key cryptography in electronic payment systems include the need for a third party to demand and validate certificates, the need for protection of the private key storage and certificate storage on the device, and the expense of generating the public and private keys. On the other hand, visual cryptography accomplishes secrecy, integrity, and authentication, does not need the sending of any personal information, and offers quick calculation. Based on these performance discrepancies, visual cryptography has been employed as a method of securing the suggested online payment system. 
+1.1 PROJECT SCOPE
+1.1.1 Existing System
+A QR code is a two-dimensional matrix barcode that encodes and stores large amounts of data. Due to their speed and convenience, QR codes have been used extensively in many vital applications such as health, education, and finance. A number of secure QR-based online payment systems have been proposed in literature. In different payment models each providing different levels of speed and security have been presented. These models include the Operator Centric Model and the Peer-To-Peer Model.
+1.1.2 DISADVANTAGES OF EXISTING SYSTEM:
+Not Secure
+1.2 PROPOSED SYSTEM
+We propose a novel framework based on the image encryption and QR Code for sharing the links. First the url will be converted to QR Code and then the QR code will be encrypted and the url of the encrypted QR Code will be again converted to QR Code. This way the QR Code will be more secure even if we share the QR Code no one will be able to gain access to the actual url only those with image decryption program will be able to decrypt the QR Code and get to the link.
+1.2.1 Advantages of the Proposed System
+More Secure
+1.3 FEASIBILITY STUDY
+1.3.1 Technical Feasibility
+The rise of digital payments has necessitated the development of secure and efficient payment systems. This document outlines the design and implementation of a Secure QR Payment System that incorporates visual cryptography to enhance security. 
+1.3.2 Economic Feasibility
+This document outlines the economic feasibility, design, and implementation of a secure QR payment system utilizing visual cryptography. This system aims to enhance transaction security while maintaining user convenience.
+1.3.3 Operational Feasibility
+This document outlines the operational feasibility, design, and implementation of a secure QR payment system utilizing visual cryptography to enhance security.To create a payment system that ensures secure transactions through QR codes, protecting sensitive information.
+
+1.4 SOFTWARE REQUIREMENT SPECIFICATION (SRS)
+1.4.1 Intended Audience and Reading Suggestions
+This document is intended for developers, and IT professionals involved in the system’s development and deployment. It provides a detailed specification of the project’s functionality, requirements, and expected performance.
+1.4.2 Purpose
+The primary purpose of designing and implementing a secure QR payment system using visual cryptography is to enhance the security of QR code-based payments by making them more resistant to common attacks like interception and forgery. 
+This is achieved by splitting the payment data into two shares, one for the merchant and one for the server, which must be combined to reveal the transaction details, preventing unauthorized access.  
+Visual Cryptography Data Integrity and Confidentiality 
+1.4.3 Scope
+The system will provide:
+Developing a user-friendly interface for generating and scanning QR codes. 
+Designing a secure payment gateway or server for processing transactions. 
+Implementing a robust system for storing and retrieving payment data securely.
+
+1.5 SYSTEM FEATURES
+Functional Requirements
+Authentication of user whenever he/she logs into the system
+System shutdown in case of a cyber-attack
+A verification email is sent to user whenever he/she register for the first time on some software system.
+NonFunctional Requirements
+Emails should be sent with a latency of no greater than 12 hours from such an activity.
+The processing of each request should be done within 10 seconds
+The site should load in 3 seconds whenever of simultaneous users are > 10000
+1.6 EXTERNAL INTERFACE REQUIREMENTS
+User Interfaces
+Merchant initiates payment and shows their QR share.
+Customer opens their app and overlays their share using the camera or device screen.
+      Once both shares are combined:
+The complete QR code is reconstructed visually.
+This QR can be scanned by the payment processor or verified by app logic.
+System processes the payment, logs the transaction, and provides confirmation.
+1.6.2 Hardware Interfaces
+Runs on any standard PC/laptop with a modern web browser.
+Requires a stable internet connection for online database access.
+1.6.3 Software Interfaces
+Database Integration: MySQL for storing QR codes.
+Web Server: Apache (via XAMPP) to handle requests and database interactions.
+1.7 OTHER REQUIREMENTS
+1.7.1 Legal and Regulatory Compliance
+Conduct a Data Protection Impact Assessment (DPIA).
+Regularly audit and update your security and compliance posture.
+Work with legal counsel specializing in fintech and data privacy.
+Document all policies and procedures for audit readiness.
+1.7.2 Documentation Requirements
+The system will include user manuals for urls.
+Developers will receive QR codes.
+SCOPE OF FUTURE DEVELOPMENT
+The system can be upgraded in the future with additional features such as:
+Integration with Biometric Authentication: Enhancing user authentication through biometric features like fingerprint or facial recognition can significantly strengthen system security and reduce the risk of unauthorized access.
+Support for Multi-Factor Authentication (MFA): The future system can incorporate MFA, combining visual cryptography with OTPs (One-Time Passwords), biometric validation, or smart card access to provide an additional security layer.
+ Blockchain Integration: Using blockchain for transaction verification and audit trails can ensure transparency, immutability, and further decentralize the security model.
+Cross-Platform Compatibility: Expanding the system to support various platforms (Android, iOS, web browsers, etc.) with consistent user experience will increase accessibility and usability.
+AI-Based Fraud Detection: Incorporating artificial intelligence and machine learning models can enable real-time monitoring and detection of fraudulent patterns in QR transactions.
+Dynamic QR Codes: Implementing time-sensitive or usage-limited dynamic QR codes can reduce the risks associated with static codes, making them more secure against phishing and reuse.
+Cloud-Based Key Management: Future iterations can explore secure cloud-based cryptographic key management systems to enhance scalability and reduce the risk of key loss or misuse.
+
+
+
+
+
+
+
+CHAPTER 2
+PROBLEM STATEMENT
+
+With the increasing reliance on digital payment systems, security has become a paramount concern. QR codes are widely used for facilitating quick and contactless payments. However, they are susceptible to various security threats, such as interception, forgery, and unauthorized access. Visual cryptography offers a promising approach to enhance the security of QR codes by splitting the information into multiple shares, which can only be combined to reveal the original data.
+Design a Secure QR Payment System: Develop a QR code payment system that integrates visual cryptography to enhance security.
+Implement Visual Cryptography: Utilize visual cryptography techniques to split payment information into multiple shares.
+Ensure User Convenience: Maintain ease of use for end-users while implementing robust security measures.
+Evaluate Security and Performance: Assess the effectiveness of the system in terms of security against attacks and its performance in real-world scenarios.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 3
+REQUIREMENT ANALYSIS
+
+3. Requirement Analysis
+SOFTWARE AND HARDWARE REQUIREMENTS:
+
+Operating system:  Windows 7 or 7+
+Ram:  8 GB
+Hard disc or SSD:  More than 500 GB
+Processor:  Intel 3rd generation or high or Ryzen with 8 GB Ram
+Software’s                               :  Python 3.6 or high version, Visual studio, PyCharm.
+
+3.3 FEASIBILITY STUDY
+3.3.1 Technical Feasibility
+This study is carried out to check the technical feasibility, that is, the technical requirements of the system. Any system developed must not have a high demand on the available technical resources. This will lead to high demands on the available technical resources. This will lead to high demands being placed on the client. The developed system must have a modest requirement, as only minimal or null changes are required for implementing this system.
+
+3.3.2 Economic Feasibility
+This study is carried out to check the economic impact that the system will have on the organization. The amount of fund that the company can pour into the research and development of the system is limited. The expenditures must be justified. Thus, the developed system as well within the budget and this was achieved because most of the technologies used are freely available. Only the customized products had to be purchased. 
+3.3.3 Social Feasibility
+The aspect of study is to check the level of acceptance of the system by the user. This includes the process of training the user to use the system efficiently. The user must not feel threatened by the system, instead must accept it as a necessity. The level of acceptance by the users solely depends on the methods that are employed to educate the user about the system and to make him familiar with it. His level of confidence must be raised so that he is also able to make some constructive criticism, which is welcomed, as he is the final user of the system.
+
+
+3.4 SOFTWARE REQUIREMENT SPECIFICATION (SRS)
+3.4.1 Intended Audience and Reading Suggestions
+This document is intended for developers, and IT professionals involved in the system’s development and deployment. It provides a detailed specification of the project’s functionality, requirements, and expected performance.
+3.4.2 Purpose
+The primary purpose of designing and implementing a secure QR payment system using visual cryptography is to enhance the security of QR code-based payments by making them more resistant to common attacks like interception and forgery. 
+This is achieved by splitting the payment data into two shares, one for the merchant and one for the server, which must be combined to reveal the transaction details, preventing unauthorized access.  
+Visual Cryptography Data Integrity and Confidentiality 
+3.4.3 Scope
+The system will provide:
+Developing a user-friendly interface for generating and scanning QR codes. 
+Designing a secure payment gateway or server for processing transactions. 
+Implementing a robust system for storing and retrieving payment data securely
+
+3.5 SYSTEM FEATURES
+3.5.1 Functional Requirements
+Authentication of user whenever he/she logs into the system
+System shutdown in case of a cyber-attack
+A verification email is sent to user whenever he/she register for the first time on some software system.
+3.5.2 NonFunctional Requirements
+Emails should be sent with a latency of no greater than 12 hours from such an activity.
+The processing of each request should be done within 10 seconds
+The site should load in 3 seconds whenever of simultaneous users are > 10000
+3.6 EXTERNAL INTERFACE REQUIREMENTS
+3.6.1 User Interfaces
+Merchant initiates payment and shows their QR share.
+Customer opens their app and overlays their share using the camera or device screen.
+      Once both shares are combined:
+The complete QR code is reconstructed visually.
+This QR can be scanned by the payment processor or verified by app logic.
+System processes the payment, logs the transaction, and provides confirmation.
+3.6.2 Hardware Interfaces
+Runs on any standard PC/laptop with a modern web browser.
+Requires a stable internet connection for online database access.
+3.6.3 Software Interfaces
+Database Integration: MySQL for storing QR codes.
+Web Server: Apache (via XAMPP) to handle requests and database interactions.
+
+3.7 OTHER REQUIREMENTS
+3.7.1 Legal and Regulatory Compliance
+Conduct a Data Protection Impact Assessment (DPIA).
+Regularly audit and update your security and compliance posture.
+Work with legal counsel specializing in fintech and data privacy.
+Document all policies and procedures for audit readiness.
+3.7.2 Documentation Requirements
+The system will include user manuals for urls.
+Developers will receive QR codes.
+
+3.8 SCOPE OF FUTURE DEVELOPMENT
+The system can be upgraded in the future with additional features such as:
+Integration with Biometric Authentication: Enhancing user authentication through biometric features like fingerprint or facial recognition can significantly strengthen system security and reduce the risk of unauthorized access.
+Support for Multi-Factor Authentication (MFA): The future system can incorporate MFA, combining visual cryptography with OTPs (One-Time Passwords), biometric validation, or smart card access to provide an additional security layer.
+ Blockchain Integration: Using blockchain for transaction verification and audit trails can ensure transparency, immutability, and further decentralize the security model.
+Cross-Platform Compatibility: Expanding the system to support various platforms (Android, iOS, web browsers, etc.) with consistent user experience will increase accessibility and usability.
+AI-Based Fraud Detection: Incorporating artificial intelligence and machine learning models can enable real-time monitoring and detection of fraudulent patterns in QR transactions.
+
+
+CHAPTER 4
+SOFTWARE DESIGN
+
+
+
+Fig1. Architecture of the Software Design
+Architecture diagrams play a crucial role in the software design process by providing clarity, facilitating communication, aiding in decision making, and serving as documentation for the system's design.
+
+
+
+
+
+
+
+
+4.2 USE CASE DIAGRAM
+
+
+Fig2. USE CASE DIAGRAM1
+ A use case diagram is a visual representation of the interactions between actors (users or external systems) and a system under consideration. It illustrates the various ways in which actors interact with the system to achieve specific goals or tasks.
+
+4.3 CLASS DIAGRAM
+
+
+
+
+
+Fig3.CLASS DIAGRAM
+
+4.3 SEQUENCE DIAGRAM
+
+
+                                                 Fig4.Sequence Diagram  
+4.4 ACTIVITY DIAGRAM
+
+Fig5. ACTIVITY DIAGRAM
+
+4.5 COLLABORATION DIAGRAM:
+
+                                Fig6. COLLABORATION DIAGRAM
+In collaboration diagram the method call sequence is indicated by some numbering technique as shown below. The number indicates how the methods are called one after another. We have taken the same order management system to describe the collaboration diagram. The method calls are similar to that of a sequence diagram. But the difference is that the sequence diagram does not describe the object organization whereas the collaboration diagram shows the object organization.
+
+4.6 DEPLOYMENT DIAGRAM
+
+                                                  Fig7. DEPLOYMENT DIAGRAM
+Deployment diagram represents the deployment view of a system. It is related to the component diagram. Because the components are deployed using the deployment diagrams. A deployment diagram consists of nodes. Nodes are nothing but physical hardware’s used to deploy the application.
+
+
+
+4.7 COMPONENT DIAGRAM:
+
+Fig8. COMPONENT DIAGRAM
+A component diagram, also known as a UML component diagram, describes the organization and wiring of the physical components in a system. Component diagrams are often drawn to help model implementation details and double-check that every aspect of the system's required function is covered by planned development.
+
+4.8 ER DIAGRAM:
+
+Fig9. ER DIAGRAM
+An Entity–relationship model (ER model) describes the structure of a database with the help of a diagram, which is known as Entity Relationship Diagram (ER Diagram). An ER model is a design or blueprint of a database that can later be implemented as a database. The main components of E-R model are: entity set and relationship set.
+
+
+4.9 DFD DIAGRAM:
+
+Fig9. DFD DIAGRAM
+A Data Flow Diagram (DFD) is a traditional way to visualize the information flows within a system. A neat and clear DFD can depict a good amount of the system requirements graphically. It can be manual, automated, or a combination of both. It shows how information enters and leaves the system, what changes the information and where information is stored. The purpose of a DFD is to show the scope and boundaries of a system as a whole. It may be used as a communications tool between a systems analyst and any person who plays a part in the system that acts as the starting point for redesigning a system.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 5
+IMPLEMENTATION
+Design and Implementation of a Secure QR Payment System Based on Visual Cryptography
+ Installing Python:
+To download and install Python visit the official website of Python https://www.python.org/downloads/ and choose your version.
+
+Once the download is complete, run the exe for install Python. Now click on Install Now.
+ You can see Python installing at this point.
+When it finishes, you can see a screen that says the Setup was successful. Now click on "Close".
+Installing PyCharm:
+To download PyCharm visit the website https://www.jetbrains.com/pycharm/download/ and click the "DOWNLOAD" link under the Community Section.
+
+Once the download is complete, run the exe for install PyCharm. The setup wizard should have started. Click “Next”.
+On the next screen, Change the installation path if required. Click “Next”.
+On the next screen, you can create a desktop shortcut if you want and click on “Next”.
+Choose the start menu folder. Keep selected JetBrains and click on “Install”.
+Wait for the installation to finish.
+Once installation finished, you should receive a message screen that PyCharm is installed. If you want to go ahead and run it, click the “Run PyCharm Community Edition” box first and click “Finish”.
+ After you click on "Finish," the Following screen will appear.
+
+9. You need to install some packages to execute your project in a proper way.
+10. Open the command prompt/ anaconda prompt or terminal as administrator. 
+11.  The prompt will get open, with specified path, type “pip install package name” which you want to install (like NumPy, pandas, sea born, scikit-learn, Matplotlib, Pyplot)
+Ex: Pip install NumPy
+
+
+
+INTRODUCTION TO PYTHON
+Python
+What Is a Script?
+Up to this point, I have concentrated on the interactive programming capability of Python.  This is a very useful capability that allows you to type in a program and to have it executed immediately in an interactive mode
+Scripts are reusable
+Basically, a script is a text file containing the statements that comprise a Python program.  Once you have created the script, you can execute it over and over without having to retype it each time.
+Scripts are editable
+Perhaps, more importantly, you can make different versions of the script by modifying the statements from one file to the next using a text editor.  Then you can execute each of the individual versions.  In this way, it is easy to create different programs with a minimum amount of typing.
+You will need a text editor
+Just about any text editor will suffice for creating Python script files.
+You can use Microsoft Notepad, Microsoft WordPad, Microsoft Word, or just about any word processor if you want to.
+Difference between a script and a program
+Script:
+Scripts are distinct from the core code of the application, which is usually written in a different language, and are often created or at least modified by the end-user. Scripts are often interpreted from source code or byte code, whereas the applications they control are traditionally compiled to native machine code.
+Program:
+The program has an executable form that the computer can use directly to execute the instructions.
+The same program in its human-readable source code form, from which executable programs are derived (e.g., compiled)
+
+Python
+What is Python? Chances you are asking yourself this. You may have found this book because you want to learn to program but don’t know anything about programming languages. Or you may have heard of programming languages like C, C++, C#, or Java and want to know what Python is and how it compares to “big name” languages. Hopefully I can explain it for you.
+Python concepts
+If you’re not interested in the how’s and whys of Python, feel free to skip to the next chapter. In this chapter I will try to explain to the reader why I think Python is one of the best languages available and why it’s a great one to start programming with.
+ • Open-source general-purpose language.
+ • Object Oriented, Procedural, Functional 
+• Easy to interface with C/ObjC/Java/Fortran
+ • Easy-is to interface with C++ (via SWIG) 
+• Great interactive environment
+• Great interactive environment
+Python is a high-level, interpreted, interactive and object-oriented scripting language. Python is designed to be highly readable. It uses English keywords frequently where as other languages use punctuation, and it has fewer syntactical constructions than other languages.
+Python is Interpreted − Python is processed at runtime by the interpreter. You do not need to compile your program before executing it. This is similar to PERL and PHP.
+Python is Interactive − you can actually sit at a Python prompt and interact with the interpreter directly to write your programs.
+Python is Object-Oriented − Python supports Object-Oriented style or technique of programming that encapsulates code within objects.
+Python is a Beginner's Language − Python is a great language for the beginner-level programmers and supports the development of a wide range of applications from simple text processing to WWW browsers to games.
+History of Python
+Python was developed by Guido van Possum in the late eighties and early nineties at the National Research Institute for Mathematics and Computer Science in the Netherlands.
+Python is derived from many other languages, including ABC, Modula-3, C, C++, Algol-68, Smalltalk, and UNIX shell and other scripting languages.
+Python is copyrighted. Like Perl, Python source code is now available under the GNU General Public License (GPL).
+Python is now maintained by a core development team at the institute, although Guido van Possum still holds a vital role in directing its progress.
+
+Python Features
+Python's features include −
+Easy-to-learn − Python has few keywords, simple structure, and a clearly defined syntax. This allows the student to pick up the language quickly.
+Easy-to-read − Python code is more clearly defined and visible to the eyes.
+Easy-to-maintain − Python's source code is fairly easy-to-maintained.
+A broad standard library − Python's bulk of the library is very portable and cross-platform compatible on UNIX, Windows, and Macintosh.
+Interactive Mode − Python has support for an interactive mode which allows interactive testing and debugging of snippets of code.
+Portable − Python can run on a wide variety of hardware platforms and has the same interface on all platforms.
+Extendable − you can add low-level modules to the Python interpreter. These modules enable programmers to add to or customize their tools to be more efficient.
+Databases − Python provides interfaces to all major commercial databases.
+GUI Programming − Python supports GUI applications that can be created and ported to many system calls, libraries and windows systems, such as Windows MFC, Macintosh, and the X Window system of Unix.
+Scalable − Python provides a better structure and support for large programs than shell scripting.
+Apart from the above-mentioned features, Python has a big list of good features, few are listed below −
+It supports functional and structured programming methods as well as OOP.
+It can be used as a scripting language or can be compiled to byte-code for building large applications.
+It provides very high-level dynamic data types and supports dynamic type checking.
+IT supports automatic garbage collection.
+It can be easily integrated with C, C++, COM, ActiveX, CORBA, and Java
+Dynamic vs. Static
+ Types Python is a dynamic-typed language. Many other languages are static typed, such as C/C++ and Java. A static typed language requires the programmer to explicitly tell the computer what type of “thing” each data value is.
+ For example, in C if you had a variable that was to contain the price of something, you would have to declare the variable as a “float” type. 
+This tells the compiler that the only data that can be used for that variable must be a floating-point number, i.e. a number with a decimal point.
+ If any other data value was assigned to that variable, the compiler would give an error when trying to compile the program.
+ Python, however, doesn’t require this. You simply give your variables names and assign values to them. The interpreter takes care of keeping track of what kinds of objects your program is using. This also means that you can change the size of the values as you develop the program. Say you have another decimal number (a.k.a. a floating-point number) you need in your program. 
+With a static typed language, you have to decide the memory size the variable can take when you first initialize that variable. A double is a floating-point value that can handle a much larger number than a normal float (the actual memory sizes depend on the operating environment).
+ If you declare a variable to be a float but later on assign a value that is too big to it, your program will fail; you will have to go back and change that variable to be a double.
+ With Python, it doesn’t matter. You simply give it whatever number you want and Python will take care of manipulating it as needed. It even works for derived values.
+ For example, say you are dividing two numbers. One is a floating-point number and one is an integer. Python realizes that it’s more accurate to keep track of decimals so it automatically calculates the result as a floating-point number.
+Variables
+Variables are nothing but reserved memory locations to store values. This means that when you create a variable you reserve some space in memory.
+Based on the data type of a variable, the interpreter allocates memory and decides what can be stored in the reserved memory. Therefore, by assigning different data types to variables, you can store integers, decimals or characters in these variables.
+Standard Data Types
+The data stored in memory can be of many types. For example, a person’s age is stored as a numeric value and his or her address is stored as alphanumeric characters. Python has various standard data types that are used to define the operations possible on them and the storage method for each of them.
+Python has five standard data types –
+Numbers
+String
+List
+Tuple
+Dictionary
+
+Python Numbers
+Number data types store numeric values. Number objects are created when you assign a value to them
+Python Strings
+Strings in Python are identified as a contiguous set of characters represented in the quotation marks. Python allows for either pairs of single or double quotes. Subsets of strings can be taken using the slice operator ([ ] and [:]) with indexes starting at 0 in the beginning of the string and working their way from -1 at the end.
+Python Lists
+Lists are the most versatile of Python's compound data types. A list contains items separated by commas and enclosed within square brackets ([]). To some extent, lists are similar to arrays in C. One difference between them is that all the items belonging to a list can be of different data type.
+The values stored in a list can be accessed using the slice operator ([ ] and [:]) with indexes starting at 0 in the beginning of the list and working their way to end -1. The plus (+) sign is the list concatenation operator, and the asterisk (*) is the repetition operator. 
+Python Tuples
+A tuple is another sequence data type that is similar to the list. A tuple consists of a number of values separated by commas. Unlike lists, however, tuples are enclosed within parentheses.
+The main differences between lists and tuples are: Lists are enclosed in brackets ([ ]) and their elements and size can be changed, while tuples are enclosed in parentheses (( )) and cannot be updated. Tuples can be thought of as read-only lists.
+
+Python Dictionary
+Python's dictionaries are kind of hash table type. They work like associative arrays or hashes found in Perl and consist of key-value pairs. A dictionary key can be almost any Python type, but are usually numbers or strings. Values, on the other hand, can be any arbitrary Python object.
+Dictionaries are enclosed by curly braces ({ }) and values can be assigned and accessed using square braces ([]).
+Different modes in python
+Python has two basic modes: normal and interactive. 
+The normal mode is the mode where the scripted and finished .pie files are run in the Python interpreter. 
+Interactive mode is a command line shell which gives immediate feedback for each statement, while running previously fed statements in active memory. As new lines are fed into the interpreter, the fed program is evaluated both in part and in whole
+20 Python libraries
+1. Requests. The most famous http library written by Kenneth remits. It’s a must have for every python developer.
+2. Scrappy. If you are involved in web scraping then this is a must have library for you. After using this library you won’t use any other.
+3. Python. A guy toolkit for python. I have primarily used it in place of tinder. You will really love it.
+4. Pillow. A friendly fork of PIL (Python Imaging Library). It is more user friendly than PIL and is a must have for anyone who works with images.
+5. SQL Alchemy. A database library. Many love it and many hate it. The choice is yours.
+6. Beautiful Soup. I know it’s slow but this xml and html parsing library is very useful for beginners.
+7. Twisted. The most important tool for any network application developer. It has a very beautiful ape and is used by a lot of famous python developers.
+8. Numbly. How can we leave this very important library? It provides some advance math functionalities to python.
+9. Skippy. When we talk about numbly then we have to talk about spicy. It is a library of algorithms and mathematical tools for python and has caused many scientists to switch from ruby to python.
+10. Matplotlib. A numerical plotting library. It is very useful for any data scientist or any data analyser.
+11. Pygmy. Which developer does not like to play games and develop them? This library will help you achieve your goal of 2d game development.
+12. Piglet. A 3d animation and game creation engine. This is the engine in which the famous python port of mine craft was made
+13. Pit. A GUI toolkit for python. It is my second choice after python for developing GUI’s for my python scripts.
+14. Pit. Another python GUI library. It is the same library in which the famous Bit torrent client is created.
+15. Scaly. A packet sniffer and analyser for python made in python.
+16. Pywin32. A python library which provides some useful methods and classes for interacting with windows.
+17. Notch. Natural Language Toolkit – I realize most people won’t be using this one, but it’s generic enough. It is a very useful library if you want to manipulate strings. But its capacity is beyond that. Do check it out.
+18. Nose. A testing framework for python. It is used by millions of python developers. It is a must have if you do test driven development.
+19. Simply. Simply can-do algebraic evaluation, differentiation, expansion, complex numbers, etc. It is contained in a pure Python distribution.
+20. I Python. I just can’t stress enough how useful this tool is. It is a python prompt on steroids. It has completion, history, shell capabilities, and a lot more. Make sure that you take a look at it.
+NumPy
+Humpy’s main object is the homogeneous multidimensional array. It is a table of elements (usually numbers), all of the same type, indexed by a tuple of positive integers. In numbly dimensions are called axes. The number of axes is rank.
+• Offers Matlab-ish capabilities within Python 
+ • Fast array operations
+ • 2D arrays, multi-D arrays, linear algebra etc.
+Matplotlib
+• High quality plotting library.
+Python class and objects
+These are the building blocks of OOP. Class creates a new object. This object can be anything, whether an abstract data concept or a model of a physical object, e.g. a chair. Each class has individual characteristics unique to that class, including variables and methods. Classes are very powerful and currently “the big thing” in most programming languages. Hence, there are several chapters dedicated to OOP later in the book.
+The class is the most basic component of object-oriented programming. Previously, you learned how to use functions to make your program do something. 
+Now will move into the big, scary world of Object-Oriented Programming (OOP). To be honest, it took me several months to get a handle on objects. 
+When I first learned C and C++, I did great; functions just made sense for me. 
+Having messed around with BASIC in the early ’90s, I realized functions were just like subroutines so there wasn’t much new to learn.
+ However, when my C++ course started talking about objects, classes, and all the new features of OOP, my grades definitely suffered. 
+Once you learn OOP, you’ll realize that it’s actually a pretty powerful tool. Plus many Python libraries and APIs use classes, so you should at least be able to understand what the code is doing. 
+One thing to note about Python and OOP: it’s not mandatory to use objects in your code in a way that works best; maybe you don’t need to have a full-blown class with initialization code and methods to just return a calculation. With Python, you can get as technical as you want.
+As you’ve already seen, Python can do just fine with functions. Unlike languages such as Java, you aren’t tied down to a single way of doing things; you can mix functions and classes as necessary in the same program. This lets you build the code
+Objects are an encapsulation of variables and functions into a single entity. Objects get their variables and functions from classes. Classes are essentially a template to create your objects.
+Here’s a brief list of Python OOP ideas:
+ • The class statement creates a class object and gives it a name. This creates a new namespace.
+ • Assignments within the class create class attributes. These attributes are accessed by qualifying the name using dot syntax: ClassName.Attribute. 
+• Class attributes export the state of an object and its associated behaviour. These attributes are shared by all instances of a class.
+ • Calling a class (just like a function) creates a new instance of the class.
+ This is where the multiple copy’s part comes in.
+• Each instance gets ("inherits") the default class attributes and gets its own namespace. This prevents instance objects from overlapping and confusing the program.
+ • Using the term self identifies a particular instance, allowing for per-instance attributes. This allows items such as variables to be associated with a particular instance.
+Inheritance
+ First off, classes allow you to modify a program without really making changes to it. 
+To elaborate, by sub classing a class, you can change the behaviour of the program by simply adding new components to it rather than rewriting the existing components. 
+As we’ve seen, an instance of a class inherits the attributes of that class. 
+However, classes can also inherit attributes from other classes. Hence, a subclass inherits from a superclass allowing you to make a generic superclass that is specialized via subclasses. 
+The subclasses can override the logic in a superclass, allowing you to change the behavior of your classes without changing the superclass at all.
+
+
+
+Operator Overloads
+ Operator overloading simply means that objects that you create from classes can respond to actions (operations) that are already defined within Python, such as addition, slicing, printing, etc. 
+Even though these actions can be implemented via class methods, using overloading ties the behavior closer to Python’s object model and the object interfaces are more consistent to Python’s built-in objects, hence overloading is easier to learn and use.
+ User-made classes can override nearly all of Python’s built-in operation methods
+Exceptions 
+I’ve talked about exceptions before but now I will talk about them in depth. Essentially, exceptions are events that modify program’s flow, either intentionally or due to errors. 
+They are special events that can occur due to an error, e.g. trying to open a file that doesn’t exist, or when the program reaches a marker, such as the completion of a loop. 
+Exceptions, by definition, don’t occur very often; hence, they are the "exception to the rule" and a special class has been created for them. Exceptions are everywhere in Python.
+ Virtually every module in the standard Python library uses them, and Python itself will raise them in a lot of different circumstances. 
+Here are just a few examples:
+ • Accessing a non−existent dictionary key will raise a Key Error exception. 
+• Searching a list for a non−existent value will raise a Value Error exception
+. • Calling a non−existent method will raise an Attribute Error exception. 
+• Referencing a non−existent variable will raise a Name Error exception. 
+• Mixing data types without coercion will raise a Type Error exception.
+One use of exceptions is to catch a fault and allow the program to continue working; we have seen this before when we talked about files. 
+This is the most common way to use exceptions. When programming with the Python command line interpreter, you don’t need to worry about catching exceptions. 
+Your program is usually short enough to not be hurt too much if an exception occurs. 
+Plus, having the exception occur at the command line is a quick and easy way to tell if your code logic has a problem. 
+However, if the same error occurred in your real program, it will fail and stop working. Exceptions can be created manually in the code by raising an exception.
+ It operates exactly as a system-caused exceptions, except that the programmer is doing it on purpose. This can be for a number of reasons. One of the benefits of using exceptions is that, by their nature, they don’t put any overhead on the code processing. 
+Because exceptions aren’t supposed to happen very often, they aren’t processed until they occur. 
+Exceptions can be thought of as a special form of the if/elf statements. You can realistically do the same thing with if blocks as you can with exceptions. 
+However, as already mentioned, exceptions aren’t processed until they occur; if blocks are processed all the time.
+ Proper use of exceptions can help the performance of your program. 
+The more infrequent the error might occur, the better off you are to use exceptions; using if blocks requires Python to always test extra conditions before continuing. 
+Exceptions also make code management easier: if your programming logic is mixed in with error-handling if statements, it can be difficult to read, modify, and debug your program.
+User-Defined Exceptions 
+I won’t spend too much time talking about this, but Python does allow for a programmer to create his own exceptions. 
+You probably won’t have to do this very often but it’s nice to have the option when necessary.
+ However, before making your own exceptions, make sure there isn’t one of the built-in exceptions that will work for you.
+ They have been "tested by fire" over the years and not only work effectively, they have been optimized for performance and are bug-free.
+ Making your own exceptions involves object-oriented programming, which will be covered in the next chapter
+. To make a custom exception, the programmer determines which base exception to use as the class to inherit from, e.g. making an exception for negative numbers or one for imaginary numbers would probably fall under the Arithmetic Error exception class.
+ To make a custom exception, simply inherit the base exception and define what it will do. 
+
+Python modules
+Python allows us to store our code in files (also called modules). This is very useful for more serious programming, where we do not want to retype a long function definition from the very beginning just to change one mistake. In doing this, we are essentially defining our own modules, just like the modules defined already in the Python library.
+To support this, Python has a way to put definitions in a file and use them in a script or in an interactive instance of the interpreter. Such a file is called a module; definitions from a module can be imported into other modules or into the main module.
+Testing code
+  As indicated above, code is usually developed in a file using an editor.
+ To test the code, import it into a Python session and try to run it.
+ Usually there is an error, so you go back to the file, make a correction, and test again. 
+This process is repeated until you are satisfied that the code works. T
+His entire process is known as the development cycle. 
+There are two types of errors that you will encounter. Syntax errors occur when the form of some command is invalid. 
+This happens when you make typing errors such as misspellings, or call something by the wrong name, and for many other reasons. Python will always give an error message for a syntax error.
+Functions in Python
+It is possible, and very useful, to define our own functions in Python. Generally speaking, if you need to do a calculation only once, then use the interpreter. But when you or others have need to perform a certain type of calculation many times, then define a function.
+You use functions in programming to bundle a set of instructions that you want to use repeatedly or that, because of their complexity, are better self-contained in a sub-program and called when needed. That means that a function is a piece of code written to carry out a specified task. 
+To carry out that specific task, the function might or might not need multiple inputs. When the task is carved out, the function can or cannot return one or more values.
+There are three types of functions in python:
+   Help (), min (), print ().
+Namespaces in Python are implemented as Python dictionaries, this means it is a mapping from names (keys) to objects (values). The user doesn't have to know this to write a Python program and when using namespaces. 
+Some namespaces in Python:
+global names of a module
+local names in a function or method invocation
+built-in names: this namespace contains built-in functions (e.g. abs(), camp(), ...) and built-in exception names
+Garbage Collection
+Garbage Collector exposes the underlying memory management mechanism of Python, the automatic garbage collector. The module includes functions for controlling how the collector operates and to examine the objects known to the system, either pending collection or stuck in reference cycles and unable to be freed.
+Python XML Parser
+XML is a portable, open source language that allows programmers to develop applications that can be read by other applications, regardless of operating system and/or developmental language. 
+What is XML? The Extensible Markup Language XML is a markup language much like HTML or SGML. 
+This is recommended by the World Wide Web Consortium and available as an open standard. 
+XML is extremely useful for keeping track of small to medium amounts of data without requiring a SQL-based backbone. 
+XML Parser Architectures and APIs the Python standard library provides a minimal but useful set of interfaces to work with XML.
+ The two most basic and broadly used APIs to XML data are the SAX and DOM interfaces. 
+Simple API for XML SAX: Here, you register callbacks for events of interest and then let the parser proceed through the document. 
+This is useful when your documents are large or you have memory limitations, it parses the file as it reads it from disk and the entire file is never stored in memory. 
+Document Object Model DOM API : This is a World Wide Web Consortium recommendation wherein the entire file is read into memory and stored in a hierarchical tree − based form to represent all the features of an XML document.
+ SAX obviously cannot process information as fast as DOM can when working with large files. On the other hand, using DOM exclusively can really kill your resources, especially if used on a lot of small files. 
+SAX is read-only, while DOM allows changes to the XML file. Since these two different APIs literally complement each other, there is no reason why you cannot use them both for large projects.
+Python Web Frameworks
+A web framework is a code library that makes a developer's life easier when building reliable, scalable and maintainable web applications.
+Why are web frameworks useful?
+Web frameworks encapsulate what developers have learned over the past twenty years while programming sites and applications for the web. Frameworks make it easier to reuse code for common HTTP operations and to structure projects so other developers with knowledge of the framework can quickly build and maintain the application.
+Common web framework functionality
+Frameworks provide functionality in their code or through extensions to perform common operations required to run web applications. These common operations include:
+URL routing
+HTML, XML, JSON, and other output format tinplating
+Database manipulation
+Security against Cross-site request forgery (CSRF) and other attacks
+Session storage and retrieval
+Not all web frameworks include code for all of the above functionality. Frameworks fall on the spectrum from executing a single use case to providing every known web framework feature to every developer. Some frameworks take the "batteries-included" approach where everything possible comes bundled with the framework while others have a minimal core package that is amenable to extensions provided by other packages.
+Comparing web frameworks
+There is also a repository called compare-python-web-frameworks where the same web application is being coded with varying Python web frameworks, tinplating engines and object.
+
+Web framework resources
+When you are learning how to use one or more web frameworks it's helpful to have an idea of what the code under the covers is doing.
+ Frameworks is a really well done short video that explains how to choose between web frameworks. The author has some particular opinions about what should be in a framework. For the most part I agree although I've found sessions and database ORMs to be a helpful part of a framework when done well.
+ What is a web framework? Is an in-depth explanation of what web frameworks are and their relation to web servers?
+Jingo vs. Flash vs. Pyramid: Choosing a Python web framework contains background information and code comparisons for similar web applications built in these three big Python frameworks.
+This fascinating blog post takes a look at the code complexity of several Python web frameworks by providing visualizations based on their code bases.
+ Python’s web frameworks benchmarks  is a test of the responsiveness of a framework with encoding an object to JSON and returning it as a response as well as retrieving data from the database and rendering it in a template. There were no conclusive results but the output is fun to read about nonetheless.
+What web frameworks do you use and why are they awesome? Is a language agnostic Reedit discussion on web frameworks? It's interesting to see what programmers in other languages like and dislike about their suite of web frameworks compared to the main Python frameworks.
+This user-voted question & answer site asked "What are the best general purpose Python web frameworks usable in production?” The votes aren't as important as the list of the many frameworks that are available to Python developers.
+Web frameworks learning checklist
+Choose a major Python web framework (Jingo or Flask are recommended) and stick with it. When you're just starting it's best to learn one framework first instead of bouncing around trying to understand every framework.
+Work through a detailed tutorial found within the resources links on the framework's page.
+Study open source examples built with your framework of choice so you can take parts of those projects and reuse the code in your application.
+Build the first simple iteration of your web application then go to the deployment section to make it accessible on the web.
+My SQL:
+
+My SQL, the most standard Open Source database the board system, is made, scattered, and maintained by Oracle. The Web site (http://www.mysql.com/) gives the latest information about My SQL programming.
+My SQL is a database the officials structure.
+My SQL DBs are social.
+A database stores data in discrete tables as opposed to putting all of the data in a single real storeroom.
+The piece of "My SQL" in the SQL signifies "Organized Query Language". SQL is the most outstanding systematized language used to get to. 
+Dependent upon your condition, you may enter SQL clearly (for example, to deliver reports), introduce SQL declarations into in another vernacular, or use a language-unequivocal API that covers the punctuation.
+My SQL writing computer programs is Open Source.
+The My SQL Database is speedy, trustworthy, adaptable, and easy to use.
+You find a display examination of My SQL with other boss on our page.
+My SQL works in client/server or embedded structures.
+The My SQL is that includes a multi-hung SQL server that supports unmistakable back ends, a couple of assorted client undertakings and libraries, administrative mechanical assemblies, and a wide extent of use programming interfaces (APIs).
+We in like manner give My SQL as an embedded multi-hung that you can into your to get a more diminutive, snappier, less difficult to-direct free thing.
+A gigantic proportion of My SQL writing computer programs is available.
+My SQL has a sober minded course of action of features made in close interest with our customers. In all likelihood, your favored application the My SQL
+
+CHAPTER 6
+TESTING
+
+6.1 IntroductionThe purpose of testing is to discover errors. Testing is the process of trying to discover every conceivable fault or weakness in a work product. It provides a way to check the functionality of components, sub-assemblies, assemblies and/or a finished product It is the process of exercising software with the intent of ensuring that the Software system meets its requirements and user expectations and does not fail in an unacceptable manner. There are various types of test. Each test type addresses a specific testing requirement.
+
+6.2 Testing ObjectivesThe primary objectives of testing the Designing and Implementing a Secure QR Payment System Based on Visual Cryptography:
+Security Testing Objectives
+Verify Visual Cryptography Implementation
+Ensure the visual cryptography algorithm accurately splits and reconstructs the QR codes.
+Confirm that reconstruction is only possible with the correct combination of shares.
+Test Confidentiality of Transaction Data
+Validate that sensitive payment data is never fully visible in any single QR share.
+Ensure encrypted data cannot be reverse-engineered from partial shares.
+Functional Testing Objectives
+Verify End-to-End Payment Flow
+Ensure users can successfully complete transactions using split QR codes.
+Check functionality across all supported devices/platforms (e.g., mobile apps, POS systems).
+Test QR Generation and Decoding Accuracy
+Validate that QR shares are correctly generated from payment data.
+Ensure decoded output matches the original input when shares are overlaid or scanned.
+Check Error Handling
+Simulate failed transactions and partial QR scans to ensure proper error messages and safe rollback.
+
+
+
+
+6.3 Levels of TestingTesting involves several levels to ensure all aspects of the system are thoroughly verified:
+System TestingPurpose: To test the system as a whole after integrating all modules.Checks:• Integration of Modules: Testing ensures that modules such as Patient Registration, Doctor Scheduling, Billing, and Lab Reports are properly integrated. For instance, when a patient registers, it should trigger the appropriate workflow to schedule an appointment, generate medical reports, or produce bills.• Workflow Validation: Ensuring seamless workflow integration between different system components. This could include testing scenarios like patient registration → scheduling appointment → generating bill → viewing medical history.• Cross-Browser and Responsiveness Testing: Compatibility testing across different browsers (Chrome, Firefox, Edge) and screen sizes (desktop, tablet) is essential to ensure the system performs uniformly across all devices and browsers.
+Code TestingPurpose: To test the correctness and efficiency of the underlying code and algorithms.Checks:• SQL Queries: Verify that all SQL queries such as INSERT, UPDATE, DELETE, and SELECT are functioning without errors. Ensuring efficient database queries is key to performance.• Business Logic: Testing the algorithms that drive core operations, like calculating consultation fees, generating invoices, or appointment slot allocations, ensures they work as intended.• Error Handling: Confirm that the system provides meaningful, user-friendly error messages when invalid inputs are given or when the system encounters unexpected behavior. This includes handling missing fields, invalid queries, or server errors.
+White Box Testing (also known as Structural or Glass-box Testing)Purpose: This is performed by developers who have an in-depth understanding of the internal structure of the code.Checks:• Database Connectivity: Verify that connections to the database are handled properly, ensuring they are opened and closed without leaks or performance issues.• Input Validation: Prevent SQL injection attacks and ensure that inputs from users (e.g., patient names, ages, appointment times) are properly sanitized. For instance, a script should reject non-numeric values for age or negative numbers.• Query Optimization: Ensure database queries are optimized for fast execution and that indexes are used appropriately to reduce database load and response time.• Unit Testing: Test individual functions and methods (e.g., checking the logic of how patient data is stored or how appointment slots are assigned) to ensure each unit operates as expected.
+Black Box Testing (also known as Functional Testing)Purpose: This type of testing is performed by testers or end-users who do not have knowledge of the internal code structure.Checks:• Functional Testing: Ensure that all core functionalities work as expected. This includes validating:
+Patient registration form properly stores patient details.
+Appointment scheduling works accurately and reflects the selected doctor and available time slots.
+The billing module calculates costs correctly and generates invoices.• UI Testing: Check the user interface for responsiveness, consistency, and usability. Ensure that elements such as buttons, menus, forms, and tabs are functional, intuitive, and easy to navigate.• Boundary and Input Tests: Conduct tests where data falls on the boundary conditions (e.g., patient age between 0–120 years) and ensuring the system rejects invalid inputs (e.g., characters in a numeric field).• Device Testing: Test the system’s behavior on multiple devices (desktop, mobile, tablets) to ensure responsiveness and usability across all screen sizes.
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 7
+ALGORITHMS
+
+1. Substitution Cipher
+Hiding some data is known as encryption. When plain text is encrypted it becomes unreadable and is known as cipher text. In a Substitution cipher, any character of plain text from the given fixed set of characters is substituted by some other character from the same set depending on a key. For example with a shift of 1, A would be replaced by B, B would become C, and so on.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 8
+CODE
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Design and Implementation of a Secure QR Payment 
+            System Based on Visual Cryptography</title> 
+<!-- 
+Sentra Template
+https://templatemo.com/tm-518-sentra
+-->
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="stylesheet" href="/static/home/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/home/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="/static/home/css/fontAwesome.css">
+        <link rel="stylesheet" href="/static/home/css/light-box.css">
+        <link rel="stylesheet" href="/static/home/css/owl-carousel.css">
+        <link rel="stylesheet" href="/static/home/css/templatemo-style.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+        <script src="/static/home/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+    </head>
+<body>
+        <header class="nav-down responsive-nav hidden-lg hidden-md">
+            <button type="button" id="nav-toggle" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--/.navbar-header-->
+            <div id="main-nav" class="collapse navbar-collapse">
+                <nav>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#top">Home</a></li>
+                        <li><a href="#featured">Featured</a></li>
+                        <li><a href="#projects">Recent Projects</a></li>
+                        <li><a href="#video">Presentation</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <div class="sidebar-navigation hidde-sm hidden-xs">
+            <div class="logo">
+                <a href="#">Pro<em>ject</em></a>
+            </div>
+            <nav>
+                <ul>
+                    <li>
+                        <a href="#top">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#featured">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            About Us
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#projects">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            Generate QR Code
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#video">
+                            <span class="rect"></span>
+                            <span class="circle"></span>
+                            Decode QR Code
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <ul class="social-icons">
+                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                <li><a href="#"><i class="fa fa-behance"></i></a></li>
+            </ul>
+        </div>
+
+        <div class="slider">
+            <div class="Modern-Slider content-section" id="top">
+                <!-- Item -->
+                <div class="item item-1">
+                    <div class="img-fill">
+                    <div class="image"></div>
+                    <div class="info">
+                        <div>
+                          <h1>Design and Implementation <br>of a Secure QR Payment<br> 
+                            System Based on<br> Visual Cryptography</h1>
+                          <div class="white-button button">
+                              <a href="#featured">Discover More</a>
+                          </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- // Item -->
+                <!-- Item -->
+                <div class="item item-2">
+                    <div class="img-fill">
+                        <div class="image"></div>
+                        <div class="info">
+                        <div>
+                            <h1>Design and Implementation <br>of a Secure QR Payment<br> 
+                                System Based on<br> Visual Cryptography</h1>
+                          <div class="white-button button">
+                              <a href="#featured">Share More</a>
+                          </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- // Item -->
+                <!-- Item -->
+                <div class="item item-3">
+                    <div class="img-fill">
+                        <div class="image"></div>
+                        <div class="info">
+                        <div>
+                          <h1>Design and Implementation <br>of a Secure QR Payment<br> 
+                            System Based on<br> Visual Cryptography</h1>
+                          
+                          <div class="white-button button">
+                              <a href="#featured">Learn More</a>
+                          </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- // Item -->
+            </div>
+        </div>
+
+        <div class="page-content">
+            <section id="featured" class="content-section">
+                <div class="section-heading">
+                    <h1>About<br><em>Project</em></h1>
+                </div>
+                <div class="section-content">
+                    <h4>Design and Implementation of a Secure QR Payment 
+                        System Based on Visual Cryptography</h4>
+                    <p>We will describe the design and 
+                        implementation of a secure payment system based on QR codes. 
+                        These QR codes have been extensively used in recent years since 
+                        they speed up the payment process and provide users with 
+                        ultimate convenience. However, as convenient as they may sound, 
+                        QR-based online payment systems are vulnerable to different 
+                        types of attacks. Therefore, transaction processing needs to be 
+                        secure enough to protect the integrity and confidentiality of every 
+                        payment process. Moreover, the online payment system must 
+                        provide authenticity for both the sender and receiver of each 
+                        transaction. In this paper, the security of the proposed QR-based 
+                        system is provided using visual cryptography. The proposed 
+                        system consists of a mobile application and a payment gateway 
+                        server that implements visual cryptography. The application 
+                        provides a simple and user-friendly interface for users to carry 
+                        out payment transactions in user-friendly secure environment</p>
+                </div>
+            </section>
+            <section id="projects" class="content-section">
+                <div class="section-heading">
+                    <h1>Generate<br><em>QR Code</em></h1>
+                </div>
+                <div class="section-content">
+                    <form class="form-inline" action="create" method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <label for="url">URL address:</label>
+                          <input type="text" class="form-control" id="url" name="url">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    {% if img %}
+                        <img src="static/home/img/{{img}}" height="300px" style="margin-top: 20px;">
+                    {% endif %}
+                </div>            
+            </section>
+            <section id="video" class="content-section">
+                <div class="section-heading">
+                    <h1>Decode<br><em>QR Code</em></h1>
+                </div>
+                <div class="section-content">
+                    <form class="form-inline" action="decode" method="post" enctype= multipart/form-data>
+                        {% csrf_token %}
+                        <div class="form-group">
+                          <label for="qr">QR Code:</label>
+                          <input type="file" class="form-control" id="qr" name='image'>
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                    {% if res %}
+                        <p>Url: {{res}}</p>
+                    {% endif %}
+                </div>                 
+            </section>
+            <section class="footer">
+                <p>Copyright &copy; 2019 Company Name 
+                
+                . Design: TemplateMo</p>
+            </section>
+        </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/static/home/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+
+    <script src="/static/home/js/vendor/bootstrap.min.js"></script>
+    
+    <script src="/static/home/js/plugins.js"></script>
+    <script src="/static/home/js/main.js"></script>
+
+    <script>
+        // Hide Header on on scroll down
+        var didScroll;
+        var lastScrollTop = 0;
+        var delta = 5;
+        var navbarHeight = $('header').outerHeight();
+
+        $(window).scroll(function(event){
+            didScroll = true;
+        });
+
+        setInterval(function() {
+            if (didScroll) {
+                hasScrolled();
+                didScroll = false;
+            }
+        }, 250);
+
+        function hasScrolled() {
+            var st = $(this).scrollTop();
+            
+            // Make sure they scroll more than delta
+            if(Math.abs(lastScrollTop - st) <= delta)
+                return;
+            
+            // If they scrolled down and are past the navbar, add class .nav-up.
+            // This is necessary so you never see what is "behind" the navbar.
+            if (st > lastScrollTop && st > navbarHeight){
+                // Scroll Down
+                $('header').removeClass('nav-down').addClass('nav-up');
+            } else {
+                // Scroll Up
+                if(st + $(window).height() < $(document).height()) {
+                    $('header').removeClass('nav-up').addClass('nav-down');
+                }
+            }
+            lastScrollTop = st;
+        }
+    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" type="text/javascript"></script>
+</body>
+</html>
+
+
+
+
+
+
+BACKEND CODE:
+#!/usr/bin/env python
+"""Django's command-line utility for administrative tasks."""
+import os
+import sys
+
+def main():
+    """Run administrative tasks."""
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'webapp.settings')
+    try:
+        from django.core.management import execute_from_command_line
+    except ImportError as exc:
+        raise ImportError(
+            "Couldn't import Django. Are you sure it's installed and "
+            "available on your PYTHONPATH environment variable? Did you "
+            "forget to activate a virtual environment?"
+        ) from exc
+    execute_from_command_line(sys.argv)
+
+if __name__ == '__main__':
+    main()
+
+VIEW.PY
+from django.shortcuts import redirect, render
+import pyqrcode
+import png
+from pyqrcode import QRCode
+import cv2
+
+# Create your views here.
+def index(request):
+    context = {
+        'img': 'placeholder.svg',
+    }
+    return render(request, 'index.html', context)
+
+def encrypt_decrypt(image, key, name):
+    image1 = bytearray(image)
+    for index, values in enumerate(image1): 
+        image1[index] = values ^ key 
+    f1 = open("home/static/home/img/"+name+".png", 'wb') 
+    f1.write(image1) 
+    f1.close()
+
+def create_qr(request):
+    urls = request.POST['url']
+    url = pyqrcode.create(urls)
+    url.png('home/static/home/img/myqr.png', scale = 6)
+    img = open("home/static/home/img/myqr.png", 'rb') 
+    encrypt_decrypt(img.read(),42, 'encrypted')
+    url =  "home/static/home/img/encrypted.png"   
+    code =  pyqrcode.create(url)
+    code.png('home/static/home/img/myqrenc.png', scale = 6)
+    context = {
+        'img': 'myqrenc.png',
+    }
+    return render(request, 'index.html', context)
+
+def decode_qr(request):
+    img  = request.FILES['image']
+    f1 = open("home/static/home/img/myqrenc1.png", 'wb') 
+    f1.write(img.read()) 
+    f1.close()
+    qr = cv2.QRCodeDetector()
+    img = cv2.imread("home/static/home/img/myqrenc1.png")
+    val, pts, st_code=qr.detectAndDecode(img)
+    img = open(val, 'rb') 
+    encrypt_decrypt(img.read(),42, 'decrypted')
+    img = cv2.imread("home/static/home/img/decrypted.png")
+    val, pts, st_code=qr.detectAndDecode(img)
+    context = {
+        'res': val,
+        'img': 'placeholder.svg',
+    }
+    return render(request, 'index.html', context)
+
+
+
+JS CODE:
+jQuery(document).ready(function($) {
+
+    'use strict';
+
+        $(".Modern-Slider").slick({
+            autoplay:true,
+            speed:1000,
+            slidesToShow:1,
+            slidesToScroll:1,
+            pauseOnHover:false,
+            dots:true,
+            fade: true,
+            pauseOnDotsHover:true,
+            cssEase:'linear',
+           // fade:true,
+            draggable:false,
+            prevArrow:'<button class="PrevArrow"></button>',
+            nextArrow:'<button class="NextArrow"></button>', 
+          });
+
+        $('#nav-toggle').on('click', function (event) {
+            event.preventDefault();
+            $('#main-nav').toggleClass("open");
+        });
+
+        $('.tabgroup > div').hide();
+            $('.tabgroup > div:first-of-type').show();
+            $('.tabs a').click(function(e){
+              e.preventDefault();
+                var $this = $(this),
+                tabgroup = '#'+$this.parents('.tabs').data('tabgroup'),
+                others = $this.closest('li').siblings().children('a'),
+                target = $this.attr('href');
+            others.removeClass('active');
+            $this.addClass('active');
+            $(tabgroup).children('div').hide();
+            $(target).show();
+          
+        })
+
+        $(".box-video").click(function(){
+          $('iframe',this)[0].src += "&amp;autoplay=1";
+          $(this).addClass('open');
+        });
+
+        $('.owl-carousel').owlCarousel({
+            loop:true,
+            margin:30,
+            responsiveClass:true,
+            responsive:{
+                0:{
+                    items:1,
+                    nav:true
+                },
+                600:{
+                    items:2,
+                    nav:false
+                },
+                1000:{
+                    items:3,
+                    nav:true,
+                    loop:false
+                }
+            }
+        })
+
+        var contentSection = $('.content-section, .main-banner');
+        var navigation = $('nav');
+        
+        //when a nav link is clicked, smooth scroll to the section
+        navigation.on('click', 'a', function(event){
+            event.preventDefault(); //prevents previous event
+            smoothScroll($(this.hash));
+        });
+        
+        //update navigation on scroll...
+        $(window).on('scroll', function(){
+            updateNavigation();
+        })
+        //...and when the page starts
+        updateNavigation();
+        
+        /////FUNCTIONS
+        function updateNavigation(){
+            contentSection.each(function(){
+                var sectionName = $(this).attr('id');
+                var navigationMatch = $('nav a[href="#' + sectionName + '"]');
+                if( ($(this).offset().top - $(window).height()/2 < $(window).scrollTop()) &&
+                      ($(this).offset().top + $(this).height() - $(window).height()/2 > $(window).scrollTop()))
+                    {
+                        navigationMatch.addClass('active-section');
+                    }
+                else {
+                    navigationMatch.removeClass('active-section');
+                }
+            });
+        }
+CHAPTER 9
+TEST CASE
+
+Input
+Output
+Result
+Input features
+Tested for different features given by user.
+Success
+
+
+Test cases Model building:
+S.NO
+Test cases
+I/O
+Expected O/T
+Actual O/T
+P/F
+1
+Read the datasets.
+Dataset’s path.
+Datasets need to read successfully.
+Datasets fetched successfully.
+It produced P. If this not F will come
+2
+Verifying the features and generates result.
+Input image
+Output is classified as different real or fake faces
+Output is classified as different real or fake faces
+It produced P. If this is not, it will undergo F
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 10
+INPUT AND OUTPUT SCREEN
+
+
+
+
+
+
+
+
+
+             
+                                                           Home page
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                                         About Page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Prediction Page
+
+
+
+
+
+
+
+
+
+CHAPTER 11
+CONCLUSION
+
+
+In this paper, we proposed a secure QR Code sharing application and increased the security of links with image cryptography.
+
+FUTURE SCOPE
+As for future works, further investigation on the use of deep learning techniques are recommended to optimize the result for predicting fake faces. It is also essential to select images from different datasets. Thus, using deep learning for face spoofing detection will ultimately enhance its accuracy.
+Testing and Validation: Conduct extensive testing to ensure reliability and security.
+User Feedback: Gather user feedback to improve the system.
+Scalability: Explore options for scaling the system for wider adoption
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 12
+LITERATURE REVIEW
+[1] S. Tiwari, "An Introduction to QR Code Technology":
+"Quick Response" code is a 2D matrix code that is designed by keeping two points under consideration, i.e. it must store large amount of data as compared to 1D barcodes and it must be decoded at high-speed using any handheld device like phones. QR code provides high data storage capacity, fast scanning, omnidirectional readability, and many other advantages including, error-correction (so that damaged code can also be read successfully) and different type of versions. Different varieties of QR code symbols like logo QR code, encrypted QR code, QR Code are also available so that user can choose among them according to their need. Now these days, a QR code is applied in different application streams related to marketing, security, academics etc. and gain popularity at a really high pace. Day by day more people are getting aware of this technology and use it accordingly. The popularity of QR code grows rapidly with the growth of smartphone users and thus the QR code is rapidly arriving at high levels of acceptance worldwide.
+Summary: A "Quick Response" code is a 2D matrix code that is built with two goals in mind: it must hold a lot of data compared to 1D barcodes, and it must be decoded quickly using any handheld device like a phone. QR codes offer large data storage capacity, quick scanning, omnidirectional readability, and a variety of other benefits like as error correction (so that even damaged codes can be read successfully) and many versions. Different types of QR code symbols, such as logo QR code, encrypted QR code, and iQR Code, are also available, allowing users to select the best one for their needs. A QR code is now used in a variety of applications such as marketing, security, and academia, among others, and is rapidly gaining popularity. Every day, more people become aware of this technology and begin to use it appropriately.
+[2] Kamal, Sawsan & Ameen, Basheer. (2016). A New Method for Ciphering a Message Using QR Code: 
+In this paper, we have introduced a new data-hiding algorithm, where message is converted to QR code (Quick Response Code) and generate QR for mask (Key). QR Codes are mainly used to carry or store messages because they have higher or large storage capacity than any other normal conventional 'barcodes'. In the present work the authors have introduced the encryption technique by XORing part (series of bits) of QR message with the same part of QR mask (key) to encrypt any message and then embedding the key into the resulted QR. The resulted QR code may be sent to destination or may be saved for future use. In this encryption method authors have used bit-manipulation, byte-reshuffling and generalized this method. The ciphering method used here has been tested on different plain texts and it was found that the method is unbreakable using traditional cryptanalysis techniques like frequency analysis, plain-text attack, Differential attack, Brute-force attack, etc. The data is encrypted using a symmetric key method, then inserted in QR code, so that data cannot be easily retrieved without adequate authorization / permission.
+Summary: In this paper, we present a new data-hiding approach in which the message is converted to a QR code (Quick Response Code) and a QR for mask generation is generated (Key). Because QR Codes have a higher or larger storage capacity than other traditional 'barcodes,' they are primarily employed to carry or store messages. In this paper, the authors offer an encryption approach that encrypts any message by XORing a section (series of bits) of the QR message with the corresponding part of the QR mask (key) and then embedding the key into the resulting QR. The QR code generated can be transmitted to a destination or stored for later use. The creators of this encryption technology used bit manipulation, byte reshuffling, and generalized it.
+[3] M. F. Tretinjak, "The implementation of QR codes in the educational process: 
+Quick Response (QR) codes are two-dimensional (2-D) barcodes that can contain information such as URL links (e.g. a link to YouTube video, website link) and text (e.g. contact details, product details). These square pattern codes consist of black modules on a white background. QR code generator is software that stores data (e.g. URL link, text, Google map’s location) into a QR code. This encoded data can be decoded by scanning the QR code symbol with a mobile device that is equipped with a camera and a QR code reader software. QR codes have a number of purposes; they are mostly used in manufacturing (e.g. product traceability, process control, inventory and equipment management), warehousing and logistics (e.g. item tracking), retailing (e.g. sales management), healthcare (e.g. medical records management, patient identification, equipment and device tracking), transportation (e.g. ticketing and boarding passes), office automation (e.g. document management), marketing and advertising (e.g. mobile marketing, electronic tickets, coupons, payments). This paper will describe various methods for the implementation of QR codes in the educational process. Experience from the School of Electrical Engineering in Zagreb shows that QR codes supports both independent and collaborative learning and can create an interactive learning environment.
+Summary: QR codes are two-dimensional (2-D) barcodes that can hold data such as URL links (e.g., a link to a YouTube video or a website link) and text (e.g. contact details, product details). Black modules on a white background make up these square pattern codes. A QR code generator is software that converts data (such as a URL link, text, or the location of a location on Google Maps) into a QR code. Scanning the QR code symbol with a mobile device equipped with a camera and QR code reader software can decipher the encoded data.
+[4] X. Yan and Y. Lu, "Applying QR Code to Secure Medical Management: 
+In this paper, we will describe the design and implementation of a secure payment system based on QR codes. These QR codes have been extensively used in recent years since they speed up the payment process and provide users with ultimate convenience. However, as convenient as they may sound, QR-based online payment systems are vulnerable to different types of attacks. Therefore, transaction processing needs to be secure enough to protect the integrity and confidentiality of every payment process. Moreover, the online payment system must provide authenticity for both the sender and receiver of each transaction. In this paper, the security of the proposed QR-based system is provided using visual cryptography. The proposed system consists of a mobile application and a payment gateway server that implements visual cryptography. The application provides a simple and user-friendly interface for users to carry out payment transactions in user-friendly secure environment.
+Summary: The design and implementation of a secure payment system based on QR codes will be described in this paper. Since they speed up the payment process and give consumers with optimum convenience, QR codes have been increasingly popular in recent years. QR-based online payment systems, as easy as they may appear, are subject to a variety of assaults. As a result, transaction processing must be sufficiently secure to ensure the integrity and secrecy of every payment transaction. Furthermore, the online payment system must ensure that both the sender and receiver of each transaction are valid. Visual cryptography is used in this paper to ensure the security of the suggested QR-based system. The suggested system consists of a mobile application and a visual cryptography-enabled payment gateway server. Users can conduct money transactions in a user-friendly and safe environment thanks to the application's simple and user-friendly interface.
+
+[5] W. C. Wu, "A QR Code-Based on-Street Parking Fee Payment Mechanism,
+Quick response (QR) code is a convenient product for mobile phone users. People can use a smartphone camera to capture the code, and then decode it through a dedicated reader application. Specifically, that code stands for concise text, contact information, or a web hyperlink. Its existence assists phone users in keypad typing more easily. This paper proposes an on-street parking fee payment mechanism based on the QR code of an E-bill. People can regard the code as a bill to pay their parking fee, where the parking information is recorded into a remote server by the fee collectors. The main idea of this mechanism is to save on resources such as reducing paper consumption. Simulation results showed that the proposed mobile application provides a new mode for E-bill payment for on-street parking in Taiwan. 
+Summary:
+For mobile phone users, a quick response (QR) code is a useful tool. A smartphone camera may be used to capture the code, which can then be decoded using a specialised reader programme. That code, in particular, denotes succinct text, contact information, or a web connection. Its presence makes it easier for phone users to type on the keypad. The QR code of an E-bill is used in this study to suggest an on-street parking fee payment mechanism. People can think of the code as a bill for paying their parking fee, with the fee collectors recording the parking details on a remote server. The major goal of this method is to conserve resources by lowering paper usage. 
+
+
+
+
+
+
+
+
+
+
+
+
+CHAPTER 13
+REFERENCES
+[1]T. Ma, H. Zhang, J. Qian, X. Hu and Y. Tian, "The Design and Implementation of an Innovative Mobile Payment System Based on QR Bar Code," 2015 International Conference on Network and Information Systems for Computers, Wuhan, 2015, pp. 435-440.
+[2] L. BURRA P. TUMULURU, S. GONABOINA “Secure QR-Pay System with Ciphering Techniques in Mobile Devices”, International Journal of Electronics and Computer Science Engineering, P.V.P.Siddhardha Institute of Technology, Kanuru, Vijayawada, Krishna, 2012 
+[3] Jianfeng Lu, Zaorang Yang, Lina Li, Wenqiang Yuan, Li Li, and ChinChen Chang, “Multiple Schemes for Mobile Payment Authentication Using QR Code and Visual Cryptography,” Mobile Information Systems, vol. 2017, Article ID 4356038, 12 pages, 2017. 
+[4]Yang, Ching-Nung & Liao, Jung-Kuo & Wu, Fu-Heng & Yamaguchi, Yasushi. (2016). “Developing Visual Cryptography for Authentication on Smartphones”. 189-200. 10.1007/978-3-319-44350-8_19. 
+[5] Sangeeta Singh. May 2016. “QR Code Analysis” International Journal of Advanced Research in Computer Science and Software Engineering, Volume 6, Issue 5, ISSN: 2277 128 
+[6] Espejel-Trujillo, I. Castillo-Camacho, M. Nakano-Miyatake, and H. Perez-Meana, “Identity document authentication based on VSS and QR codes,” Procedia Technology, vol. 3, pp. 241–250, 2012.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Design and Implementation of a secure QR payment System based                     on Visual Cryptography
+Mr H.Gautam, Department of Computer Science & Applications,Koneru Lakshmaiah Education Foundation,AP,India.
+K.Lavanya, Department of Computer Science & Applications,Koneru Lakshmaiah Education Foundation,AP,India.
+
+Abstract: In this paper, we will describe the design and implementation of a secure payment system based on QR codes. These QR codes have been extensively used in recent years since they speed up the payment process and provide users with ultimate convenience. However, as convenient as they may sound, QR-based online payment systems are vulnerable to different types of attacks. Therefore, transaction processing needs to be secure enough to protect the integrity and confidentiality of every payment process. Moreover, the online payment system must provide authenticity for both the sender and receiver of each transaction. In this paper, the security of the proposed QR-based system is provided using visual cryptography. The proposed system consists of a web application that implements visual cryptography. The application provides a simple and user-friendly interface for users to share links through QR Code. 
+Keywords: QR codes, image cryptography
+
+Introduction: A QR code is a two-dimensional matrix barcode that encodes and stores large amounts of data. Due to their speed and convenience, QR codes have been used extensively in many vital applications such as health, education, and finance. A number of secure QR-based online payment systems have been proposed in literature. In different payment models each providing different levels of speed and security have been presented. These models include the Operator Centric Model and the Peer-To-Peer Model.
+
+Motivation: QR code payments have gained immense popularity due to their simplicity, speed, and ease of use. They are commonly used in retail, online shopping, and peer to-peer transactions, making them an attractive option for both businesses and consumers. 
+
+Methodology: Hiding some data is known as encryption. When plain text is encrypted it becomes unreadable and is known as cipher text. In a Substitution cipher, any character of plain text from the given fixed set of characters is substituted by some other character from the same set depending on a key. For example with a shift of 1, A would be replaced by B, B would become C, and so on.
+
+Result analysis: Users of the payment system can swiftly and simply navigate the mobile application. It only acts as a communication channel between users and the payment gateway server. Users are classified as consumers or merchants throughout the registration process, which entails providing personal information that will be hashed and uploaded to the server. A user can make a QR code after logging in or scan and create a QR code depending on whether they are a customer or a merchant.
+
+Conclusion: In conclusion, the advancement of online payment technologies has greatly helped businesses and significantly raised consumer pleasure. Technical replacements are constantly looking for novel and creative ways to speedup, secure, and optimise the payment process because it is concealed from the user. The simplicity of online payment systems has also rendered them open to a variety of cyberattacks, thus mistakes must be accepted. These offences include data theft, denial of service, and fraud and forgeries. There have been several solutions proposed with differing degrees of sophistication to thwart these attacks. A safe QR-based online payment system has been suggested in this research.
+
+References: 
+1.T. Ma, H. Zhang, J. Qian, X. Hu and Y. Tian, "The Design and Implementation of an Innovative Mobile Payment System Based on QR Bar Code," 2015 International Conference on Network and Information Systems for Computers, Wuhan, 2015, pp. 435-440.
+ 2. L. BURRA P. TUMULURU, S. GONABOINA “Secure QR-Pay System with Ciphering Techniques in Mobile Devices”, International Journal of Electronics and Computer Science Engineering, P.V.P.Siddhardha Institute of Technology, Kanuru, Vijayawada, Krishna, 2012 
+3. Jianfeng Lu, Zaorang Yang, Lina Li, Wenqiang Yuan, Li Li, and ChinChen Chang, “Multiple Schemes for Mobile Payment Authentication Using QR Code and Visual Cryptography,” Mobile Information Systems, vol. 2017, Article ID 4356038, 12 pages, 2017.
+ 4. Yang, Ching-Nung & Liao, Jung-Kuo & Wu, Fu-Heng & Yamaguchi, Yasushi. (2016). “Developing Visual Cryptography for Authentication on Smartphones”. 189-200. 10.1007/978-3-319-44350-8_19.
+ 5. Sangeeta Singh. May 2016. “QR Code Analysis” International Journal of Advanced Research in Computer Science and Software Engineering, Volume 6, Issue 5, ISSN: 2277 128 
+6. Espejel-Trujillo, I. Castillo-Camacho, M. Nakano-Miyatake, and H. Perez-Meana, “Identity document authentication based on VSS and QR codes,” Procedia Technology, vol. 3, pp. 241–250, 2012.

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Habit Tracker</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .leaderboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard-table th,
+        .leaderboard-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #ebedf0;
+        }
+
+        .leaderboard-table th {
+            background-color: #f8fafc;
+            font-weight: 600;
+            color: #64748b;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .leaderboard-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .rank-1 {
+            background-color: #fbbf24;
+            color: white;
+            box-shadow: 0 2px 4px rgba(251, 191, 36, 0.4);
+        }
+
+        .rank-2 {
+            background-color: #94a3b8;
+            color: white;
+        }
+
+        .rank-3 {
+            background-color: #d97706;
+            color: white;
+        }
+
+        /* Bronzeish */
+
+        .current-user-row {
+            background-color: #e0e7ff;
+            /* Light indigo */
+        }
+
+        .current-user-row td {
+            font-weight: 600;
+            color: #4338ca;
+        }
+
+        .nav-back {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            color: #6b7280;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .nav-back:hover {
+            color: #1f2937;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container" style="max-width: 800px;">
+        <header style="margin-bottom: 2rem;">
+            <a href="{{ url_for('dashboard.home') }}" class="back-link">
+                <svg class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                </svg> Back to Dashboard
+            </a>
+            <h1>Leaderboard 🏆</h1>
+            <p style="color: #6b7280;">See who's leading the habit revolution.</p>
+        </header>
+
+        <table class="leaderboard-table">
+            <thead>
+                <tr>
+                    <th style="width: 80px;">Rank</th>
+                    <th>User</th>
+                    <th>Level</th>
+                    <th style="text-align: right;">Total XP</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr class="{{ 'current-user-row' if user.is_current else '' }}">
+                    <td>
+                        {% if loop.index <= 3 %} <div class="rank-badge rank-{{ loop.index }}">{{ loop.index }}
+    </div>
+    {% else %}
+    <span style="color: #94a3b8; font-weight: 600; margin-left: 8px;">#{{ loop.index }}</span>
+    {% endif %}
+    </td>
+    <td>
+        {{ user.username }}
+        {% if user.is_current %}
+        <span
+            style="font-size: 0.7rem; background: #6366f1; color: white; padding: 1px 6px; border-radius: 4px; margin-left: 6px;">YOU</span>
+        {% endif %}
+    </td>
+    <td>
+        <span
+            style="background: #f1f5f9; padding: 2px 8px; border-radius: 12px; font-size: 0.85rem; font-weight: 500; color: #475569;">
+            Lvl {{ user.level }}
+        </span>
+    </td>
+    <td style="text-align: right; font-weight: 700; color: #6366f1;">
+        {{ user.xp }} XP
+    </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
+</body>
+
+</html>
